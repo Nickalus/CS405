@@ -1,0 +1,149 @@
+
+All projects must be submitted via the CS Portal!
+Project #1
+Due Friday October 16, 8:59am
+
+Project #1 - Due Friday-October 16, 8:59:59am [BEFORE CLASS STARTS]
+
+Use the CS Portal and submit a ZIP file as "Project #1".
+---------------------------------------------------------
+
+You are to implement "flitter", a social networking framework of applications.
+
+"flitter" should have the following components:
+
+1. Users should be able to create a "flitter" account.  At minimum, this
+   application should collect a unique "handle", a "password", a "first name",
+   a "last name", and a "location".  
+   For example, I could type:
+   adduser @paul Paul Linton "Lexington, KY"   [careful about quoting things].
+
+   It could then ask me for a password or provide it on the command-line, etc.
+   I am NOT worried about passwords being shown on your terminal/application.
+   
+   Data types are left up to you.  You should use good judgement on these 
+   and any other data types that are not specified.
+
+   Any out-of-the-ordinary design decisions should be documented.  If you 
+   decide the "first name" should be an INTEGER, for whatever reason, 
+   you should say why.
+   TABLE NAME -> "flitters"
+
+2. The rest of the components should require a user to give their "handle" and
+   "password" to perform!
+
+   Users can then "fleet" something.  This is any combination of alphanumeric
+   characters up to 155 characters [VARCHAR(155)!]
+   fleet @paul "Heading to class to give an exam in CS405!"
+
+   TABLE NAME -> "fleets"
+
+3. Users should be able to add handles of other users that they want to
+   follow (ie, see those users "fleets").
+   follow @johnsmith
+
+   TABLE NAME -> "follows"
+
+4. Users can see (in chronological order) the last X number of fleets 
+   from the flitters that they follow.  X is given by the user, a default 
+   of 25 can be set if the user doesn't specify.
+
+   Users can use an offset Y to specify a starting point (default=0, of course).
+
+   For example, if I want to see the last 25 fleets, I might type:
+   showfleets 25
+
+   But If I want to see the 25 fleets before that, I might say:
+   showfleets 25 25
+
+   And, if I want to see the 25 fleets before that, I might say:
+   showfleets 25 50
+
+   And so on.  This is a function of the database, NOT of your ability
+   to count and step through a loop.  This is very much DBMS specific.
+
+   You should not replicate functions of the DBMS with code!  You should
+   let the database take care of those things!  You will lose points every time
+   you write code that the DBMS can do for you!
+
+5. Users should be able to remove handles of users they follow, to "unfollow"
+   them.
+   For example:
+   unfollow @johnsmith
+
+All data is to be stored in a relational database.  It should "persist" 
+across invocations of the various programs.  Only the initial creation 
+of tables should be performed at the SQL command-line level (and therefore 
+those commands should NOT appear in your applications).  The rest of the 
+manipulation of the database should be performed within your programs.  
+You can, of course, use SQL command-line (ie, the mysql client) to 
+insert,delete test data while you're developing and testing.
+
+You should not use any libraries that do the query work for you - in other
+words, you should be building the SQL queries and executing them and acquiring
+the results.
+-------------------------------------------
+What you are required to turn in your ZIP archive:
+
+1. A file named "flitter.pdf".  This should contain your project's
+   external documentation.
+
+2. A file named "flitter.sql".  This should contain a complete
+   SQL DDL.  I will use this in MySQL to create all your tables and
+   perform my tests.
+
+   All PRIMARY and FOREIGN KEYs should be logically chosen.  Attributes
+   that should not be NULL should be defined as such.
+
+3. A file named "flitter_data.sql".  This should contain a list of INSERT
+   statements to load into your database as a test.  This is useful in your
+   development so you don't have to type data in for each part of the
+   development.  It helps me grade without entering your data by hand.
+   Note, this is for testing/grading only.  No data should need to be 
+   inserted into the database outside of your application(s).
+
+4. A file named "testing.pdf".  This should show execution of your programs
+   either as text, or as screen shots.
+
+5. All source code to make your applications compile/run.  Source code should
+   have proper internal documentation!
+
+-----------------------------------------------------------------------------
+Grading:
+
+   flitter.pdf                -    10%
+   flitter.sql                -    10%
+   flitter_data.sql           -     5%
+   testing.pdf                -     5%
+   modularity/efficient codebase - 10%
+   Application:
+      create user             -     5%
+	  fleet message           -    10%
+	  follow user             -     5%
+	  see fleets              -    35%
+	  unfollow user           -     5%
+--------------------------------------
+
+Extra credit (you can do any, or none of these):
+
+1. For part 3 (adding someone to follow), you can add functionality to
+   search on fields (name, location, etc.) and present a list based on the
+   search to add them to follow.                            Up to +5%.
+
+2. For part 4 (seeing fleets), add the ability to see the last X number of
+   fleets *FOR EVERY USER YOU FOLLOW*, even if they have less than X total
+   fleets.                                                  Up to +5%.
+   I will post an example here later.
+
+3. Implement a "re-fleet" option.  This will involve a modification to the
+   schema.  You would need a new table "refleet" that would then be accessed
+   with part 4 (seeing fleets).  You would need a way for a user to
+   "refleet" a viewed "fleet".  
+
+   The new "see all fleets" would involve a UNION of some type between 
+   "fleets" and "refleets".                                 Up to +10%.
+
+To receive extra credit, you have to implement all the parts of the project
+first.  You can't skip "unfollow user", for example and do extra credit #1
+instead.
+
